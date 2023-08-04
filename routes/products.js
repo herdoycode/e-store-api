@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   const { brandId, price } = req.query;
-  if (brandId & price) {
+  if (brandId && price) {
     const products = await Product.find({
       brand: brandId,
       price: { $lte: price },
