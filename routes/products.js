@@ -4,7 +4,27 @@ import { Product, validate } from "../models/product.js";
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const products = await Product.find().populate("brand");
+  const { brandId, price } = req.query;
+  if (brandId & price) {
+    const products = await Product.find({
+      brand: brandId,
+      price: { $lte: price },
+    });
+    res.send(products);
+  }
+  if (brandId) {
+    const products = await Product.find({
+      brand: brandId,
+    });
+    res.send(products);
+  }
+  if (price) {
+    const products = await Product.find({
+      price: { $lte: price },
+    });
+    res.send(products);
+  }
+  const products = await Product.find().sort("createdAt").populate("brand");
   res.send(products);
 });
 
@@ -38,10 +58,6 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-  const { error } = validate(req.body);
-
-  if (error) return res.send(error.details[0].message);
-
   const { title, description, img, img1, img2, brandId, price, productType } =
     req.body;
 
