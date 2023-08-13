@@ -24,7 +24,7 @@ export const userSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
-      default: "https://i.ibb.co/0cLmrWz/default-avatar.jpg"
+      default: "https://i.ibb.co/0cLmrWz/default-avatar.jpg",
     },
     isAdmin: {
       type: Boolean,
