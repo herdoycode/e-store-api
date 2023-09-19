@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     line_items,
     mode: "payment",
-    success_url: YOUR_DOMAIN,
+    success_url: `${YOUR_DOMAIN}/confirmed`,
     cancel_url: YOUR_DOMAIN,
   });
 
